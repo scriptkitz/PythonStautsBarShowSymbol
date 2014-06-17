@@ -1,7 +1,7 @@
 PythonStautsBarShowSymbol
 =========================
 
-In the status bar displays the code under the cursor where the names of functions and classes.<br />
+In the statusbar displays the code under the cursor where the names of functions and classes.<br />
 在状态栏显示当前光标下的代码所在的函数和类名字.
 <br/>
 
