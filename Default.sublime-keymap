@@ -1,0 +1,12 @@
+[
+  {
+    "command": "nav_pos",
+    "args": {"otype": "prev"},
+    "keys": ["ctrl+alt+u"]
+  },
+  {
+    "command": "nav_pos",
+    "args": {"otype": "next"},
+    "keys": ["ctrl+alt+i"]
+  }
+]

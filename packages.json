@@ -1,0 +1,20 @@
+{
+"schema_version": "2.0",
+"packages": [
+		{
+		"name": "PythonStautsBarShowSymbol",
+		"description": "你的插件的描述",
+		"author": "scriptkitz",
+		"homepage": "https://github.com/scriptkitz/PythonStautsBarShowSymbol",
+		"last_modified": "2014-6-17",
+		"platforms": {
+		"*": [
+			{
+			"version": "1.0",
+			"url": "https://nodeload.github.com/你的用户名/插件名/zip/tag名"
+			}
+			]
+		}
+		}
+	]
+}
