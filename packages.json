@@ -1,20 +1,31 @@
 {
-"schema_version": "2.0",
-"packages": [
-		{
-		"name": "PythonStautsBarShowSymbol",
-		"description": "你的插件的描述",
-		"author": "scriptkitz",
-		"homepage": "https://github.com/scriptkitz/PythonStautsBarShowSymbol",
-		"last_modified": "2014-6-17",
-		"platforms": {
-		"*": [
-			{
-			"version": "1.0",
-			"url": "https://nodeload.github.com/你的用户名/插件名/zip/tag名"
-			}
-			]
-		}
-		}
-	]
+    "schema_version": "2.0",
+    "packages": [
+        {
+            "name": "PythonStautsBarShowSymbol",
+            "description": "Show current cursor line which symbol name for python file.",
+            "author": "scriptkitz",
+            "details": "https://github.com/scriptkitz/PythonStautsBarShowSymbol",
+            "homepage": "https://github.com/scriptkitz/PythonStautsBarShowSymbol",
+            "readme": "https://github.com/scriptkitz/PythonStautsBarShowSymbol/blob/master/README.md",
+            "donate": "https://github.com/scriptkitz/PythonStautsBarShowSymbol/donate.html",
+            "labels": ["auto-complete", "code navigation", "snippets"],
+            "releases": [
+                {
+                    "platforms": "*",
+                    "sublime_text": "<3000",
+                    "version": "2.0.6",
+                    "url": "https://github.com/scriptkitz/PythonStautsBarShowSymbol/archive/v1.0.zip",
+                    "date": "2013-09-21 00:00:00"
+                },
+                {
+                    "platforms": "*",
+                    "sublime_text": ">=3000",
+                    "version": "2.0.6+st3",
+                    "url": "https://github.com/scriptkitz/PythonStautsBarShowSymbol/archive/v1.0.zip",
+                    "date": "2013-09-21 00:00:00"
+                }
+            ]
+        }
+    ]
 }
