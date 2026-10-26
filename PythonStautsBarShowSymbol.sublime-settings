@@ -1,0 +1,45 @@
+{
+    // Master switch.
+    "enabled": true,
+
+    // Layout of the breadcrumb.
+    //   breadcrumb — class HttpClient › def request
+    //   dotted     — HttpClient.request
+    //   plain      — class HttpClient def request
+    "format": "breadcrumb",
+
+    // Separator between levels. A space is added on both sides automatically.
+    "separator": "›",
+
+    // Frame around the status item, used to tell it apart from the native
+    // status entries (encoding, syntax, ...).
+    //   none    — class HttpClient › def request
+    //   bracket — [class HttpClient › def request]
+    //   angle   — <class HttpClient › def request>
+    //   pipe    — | class HttpClient › def request |   (default)
+    //   both    — | [class HttpClient › def request] |
+    // Bracket-style frames sit tight against the content; separator-style
+    // frames keep a space inside.
+    // Note: Sublime renders status values inside its own native group, e.g.
+    // [UTF-8 (CRLF) <value>], so a pipe frame reads better than brackets here.
+    "wrapper": "angle",
+
+    // Prefix the breadcrumb with the file name (relative to the project root
+    // when possible, otherwise the bare file name).
+    "show_file": false,
+
+    // Prefix each level with its kind: class HttpClient › def request
+    "show_kinds": true,
+
+    // Append the parameter list to functions: request(self, path, timeout=10)
+    "show_signature": false,
+
+    // Maximum number of levels to show. 0 means unlimited.
+    "max_depth": 0,
+
+    // Syntaxes to apply to, matched against the syntax name (case-insensitive).
+    "syntaxes": ["python"],
+
+    // Maximum number of jump history entries.
+    "history_size": 50
+}

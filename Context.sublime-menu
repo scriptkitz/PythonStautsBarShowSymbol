@@ -1,1 +1,31 @@
-[]
+[
+    {
+        "caption": "Python Symbol Path",
+        "id": "python-symbol-path",
+        "children": [
+            {
+                "caption": "Copy Symbol Path",
+                "command": "python_symbol_copy"
+            },
+            {
+                "caption": "Refresh Symbol Status",
+                "command": "python_symbol_refresh"
+            },
+            {
+                "caption": "Mark Jump Point",
+                "command": "python_symbol_mark"
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "caption": "Back",
+                "command": "nav_back"
+            },
+            {
+                "caption": "Forward",
+                "command": "nav_forward"
+            }
+        ]
+    }
+]

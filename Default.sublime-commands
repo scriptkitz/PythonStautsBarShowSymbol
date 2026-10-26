@@ -1,6 +1,26 @@
 [
-  {
-    "caption": "nav pos",
-    "command": "nav_pos"
-  }
+    {
+        "caption": "Python: Copy Symbol Path",
+        "command": "python_symbol_copy"
+    },
+    {
+        "caption": "Python: Refresh Symbol Status",
+        "command": "python_symbol_refresh"
+    },
+    {
+        "caption": "Python: Mark Jump Point",
+        "command": "python_symbol_mark"
+    },
+    {
+        "caption": "Python: Toggle Symbol Status",
+        "command": "python_symbol_toggle"
+    },
+    {
+        "caption": "Navigation: Back",
+        "command": "nav_back"
+    },
+    {
+        "caption": "Navigation: Forward",
+        "command": "nav_forward"
+    }
 ]
