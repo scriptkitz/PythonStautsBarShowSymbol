@@ -134,10 +134,13 @@ class BackgroundShowPythonIndentName(sublime_plugin.EventListener):
                 break
         symList.reverse()
         rs = None
-        if(sublime.version()[0]=='3'):
-            rs = re.compile(r'\s*(\w*)')
-        else:
+        mver = sublime.version()[0]
+        if(mver=='2'):
             rs = re.compile(r'\s*(def|class)\s+(\w*)')
+        elif(mver=='3'):
+            rs = re.compile(r'\s*(\w*)')
+        elif(mver=='4'):
+            rs = re.compile(r'\s*(\w*)')
         strs = ["---------------------"]
         for s in symList:
             m = rs.match(s)
