@@ -1,4 +1,4 @@
-PythonStautsBarShowSymbol
+PythonStatusBarShowSymbol
 =========================
 
 在 Sublime Text 状态栏**常驻**显示光标所处的 Python 类 / 函数路径（面包屑）。
@@ -51,6 +51,9 @@ Data/Packages/PythonStautsBarShowSymbol/
 ```
 
 无需 Package Control，放好后重启 Sublime Text 即可。
+
+> 目录名沿用了早期的拼写（`Stauts`）。改它会连带设置文件名、用户配置覆盖
+> 和已发布地址一起变，所以保留现状——安装时以实际目录名为准。
 
 <br/>
 
@@ -137,8 +140,9 @@ Data/Packages/PythonStautsBarShowSymbol/
   符号所在的源码行现算。
 * **符号表按 `(change_count, size, syntax)` 缓存。**
   只看 `change_count` 不够：**文件加载完成不会改变它**，`on_load` 时缓存下的空
-  符号表会一直命中。（另外 Sublime 对**程序化**的选区改动不触发
-  `on_selection_modified`，所以加载完成后还会补一次延迟刷新。）
+  符号表会一直命中。  （另外 Sublime 对**程序化**的选区改动不触发
+  `on_selection_modified`，所以加载完成会补一次延迟刷新，跳转定位后由
+  `_place_cursor` 自己再刷一次并同步当前上下文。）
 * **跳转走官方接口。**
   `open_file(path + ":row:col", sublime.ENCODED_POSITION)` 一步打开并定位，
   不需要自己挂 `on_load` 回调。

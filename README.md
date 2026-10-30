@@ -1,4 +1,4 @@
-PythonStautsBarShowSymbol
+PythonStatusBarShowSymbol
 =========================
 
 A persistent breadcrumb in the Sublime Text status bar that tells you which
@@ -59,6 +59,10 @@ Data/Packages/PythonStautsBarShowSymbol/
 ```
 
 No Package Control needed. Restart Sublime Text afterwards.
+
+> The directory name keeps an early misspelling (`Stauts`). Renaming it would
+> also change the settings filename, user config overrides and the published
+> URL, so it stays as is — install using the actual directory name.
 
 <br/>
 
@@ -150,7 +154,8 @@ A context menu entry (`Python Symbol Path`) offers the same actions.
   `change_count` alone is not enough: finishing a file load does not bump it, so
   an empty symbol table cached on `on_load` would never be invalidated.
   (Sublime also does not fire `on_selection_modified` for programmatic selection
-  changes, so refreshes are also scheduled after load.)
+  changes, so a refresh is scheduled after load, and `_place_cursor` refreshes
+  the status item itself and re-syncs the current context after a jump.)
 * **Navigation uses the official API.** `open_file(path + ":row:col",
   sublime.ENCODED_POSITION)` opens and positions in one call, with no need to
   hook `on_load` callbacks.

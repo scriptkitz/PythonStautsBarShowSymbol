@@ -33,6 +33,7 @@ PythonStautsBarShowSymbol
 
 import os
 import re
+import time
 
 import sublime
 import sublime_plugin
@@ -51,8 +52,14 @@ _SYMBOL_CACHE = {}
 _LAST_CONTEXT = {}
 # 已经排定刷新任务的 view
 _REFRESH_PENDING = set()
-# 插件自身触发的跳转不计入跳转历史
-_suppress_record = False
+# 插件自身触发的跳转不计入跳转历史。
+# 存的是抑制截止时间：定位成功立即清零，定位卡住时靠超时兜底。
+# 不用固定窗口是因为 _place_cursor 会重试——文件加载慢时定位可能晚于
+# 固定窗口，跳转反而被当成用户跳变故记进历史，nav_back 就原地打转了。
+_suppress_until = 0.0
+SUPPRESS_TIMEOUT = 5.0
+# 定位重试上限（约 3 秒），文件死活加载不完时别把定时器拖成僵尸
+PLACE_RETRIES = 50
 
 
 class Settings(object):
@@ -467,7 +474,7 @@ def _schedule_refresh(view, delay=250):
 
 def _record_context(view, chain=None):
     """作用域发生跳变时，把离开的位置记入跳转历史。"""
-    if _suppress_record:
+    if _suppressing():
         return
     try:
         vid = view.id()
@@ -526,11 +533,19 @@ def _encoded_path(path, row, col):
 
 
 def _place_cursor(view, row, col):
-    """把光标落到指定位置；文件还没加载完就稍后重试。"""
+    """把光标落到指定位置；文件还没加载完就稍后重试。
+
+    程序化写 ``view.sel()`` 不会派发 ``on_selection_modified``（走命令管线的
+    ``move`` 才会），所以状态栏刷新和当前位置记录都得在这里自己补。
+    """
     if view is None:
+        _release_suppress()
         return
 
     def place():
+        # 返回 True 表示这条重试链可以结束（定位成功或放弃）
+        if view.window() is None:
+            return True
         try:
             if view.is_loading():
                 return False
@@ -539,17 +554,29 @@ def _place_cursor(view, row, col):
             sel.clear()
             sel.add(sublime.Region(point, point))
             view.show_at_center(point)
+            # 补刷状态栏：这条路径没有事件可等
+            chain = refresh_view(view)
+            # 同步“当前位置”，否则下次真实移动会把跳转前的位置再记一遍历史
+            _LAST_CONTEXT[view.id()] = (point, tuple(s[1] for s in chain))
+            _release_suppress()
             return True
         except Exception:
-            return False
+            return True
 
-    if not place():
-        sublime.set_timeout(place, 60)
+    def attempt(retries):
+        if place():
+            return
+        if retries <= 0:
+            _release_suppress()
+            return
+        sublime.set_timeout(lambda: attempt(retries - 1), 60)
+
+    attempt(PLACE_RETRIES)
 
 
 def _goto_entry(window, entry):
     """跳到历史记录里的位置。"""
-    global _suppress_record
+    global _suppress_until
 
     path, row, col, vid = entry
     target = None
@@ -564,14 +591,17 @@ def _goto_entry(window, entry):
                 window.focus_view(view)
                 break
 
-    _suppress_record = True
+    _suppress_until = time.time() + SUPPRESS_TIMEOUT
     _place_cursor(target, row, col)
-    sublime.set_timeout(_release_suppress, 400)
+
+
+def _suppressing():
+    return _suppress_until > 0 and time.time() < _suppress_until
 
 
 def _release_suppress():
-    global _suppress_record
-    _suppress_record = False
+    global _suppress_until
+    _suppress_until = 0.0
 
 
 def _navigate(window, direction):
